@@ -59,13 +59,16 @@ function buildRequests(bidRequests) {
   queries.push(['sr', stringifyScreenSize()]);
 
   const queryString = encodeURI(queries.map(qs => qs.join('=')).join('&'));
-
-  return {
-    method: 'GET',
-    url: IAS_HOST,
-    data: queryString,
-    bidRequest: bidRequests[0]
-  }
+  const results = [];
+  bidRequests.forEach(function(entry) {
+    results.push({
+      method: 'GET',
+      url: IAS_HOST,
+      data: queryString,
+      bidRequest: entry
+    });
+  });
+  return results;
 }
 
 function getPageLevelKeywords(response) {
