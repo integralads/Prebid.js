@@ -59,21 +59,15 @@ function buildRequests(bidRequests) {
   queries.push(['sr', stringifyScreenSize()]);
 
   const queryString = encodeURI(queries.map(qs => qs.join('=')).join('&'));
-  const results = [
-    {
+  const results = [];
+  bidRequests.forEach(function(entry) {
+    results.push({
       method: 'GET',
       url: IAS_HOST,
       data: queryString,
-      bidRequest: bidRequests[0]
-    },
-    {
-      method: 'GET',
-      url: IAS_HOST,
-      data: queryString,
-      bidRequest: bidRequests[1]
-    }
-  ];
-
+      bidRequest: entry
+    });
+  });
   return results;
 }
 
