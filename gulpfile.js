@@ -30,7 +30,7 @@ var jsEscape = require('gulp-js-escape');
 var prebid = require('./package.json');
 var dateString = 'Updated : ' + (new Date()).toISOString().substring(0, 10);
 var banner = '/* <%= prebid.name %> v<%= prebid.version %>\n' + dateString + ' */\n';
-var port = 9999;
+var port = 8080;
 
 // these modules must be explicitly listed in --modules to be included in the build, won't be part of "all" modules
 var explicitModules = [
@@ -118,10 +118,11 @@ function watch(done) {
   ]);
 
   connect.server({
+    host: '0.0.0.0',
     https: argv.https,
     port: port,
     root: './',
-    livereload: true
+    livereload: true,
   });
 
   mainWatcher.on('all', gulp.series(clean, gulp.parallel(lint, 'build-bundle-dev', test)));

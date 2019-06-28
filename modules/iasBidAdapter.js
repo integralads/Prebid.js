@@ -113,7 +113,9 @@ function interpretResponse(serverResponse, request) {
   shallowMerge(commonBidResponse, getPageLevelKeywords(iasResponse));
   commonBidResponse.slots = iasResponse.slots;
   bidResponses.push(commonBidResponse);
-
+  if (top.postIASResponse) {
+    postIASResponse(iasResponse);
+  }
   otherBidIds.forEach(function (bidId) {
     var otherResponse = Object.assign({}, commonBidResponse);
     otherResponse.requestId = bidId;
